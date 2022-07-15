@@ -150,7 +150,6 @@ from dual;
 select last_name, last_day(hire_date)"First Salary"
 from employees
 where trunc(round(sysdate - hire_date)/365) >= 20;
-
 --T
 select last_name, last_day(hire_date)"First Salary"
 from employees

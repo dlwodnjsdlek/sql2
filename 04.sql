@@ -190,8 +190,7 @@ select last_name, salary,
         5, 0.42,
         6, 0.44,
             0.45) tax_rate
-from employees
-where department_id = 80;
+from employees;
 
 select decode(salary, 'a', 1)
 from employees;
@@ -282,3 +281,26 @@ select last_name, hire_date || ' ' || to_char(hire_date, 'day') hire_date,
     end day
 from employees
 order by  day;
+--T
+select last_name, hire_date, to_char(hire_date, 'fmday')day
+from employees
+order by case day
+        when 'monday' then 1
+        when 'tuesday' then 2
+        when 'wednesday' then 3
+        when 'thursday' then 4
+        when 'friday' then 5
+        when 'saturday' then 6
+        when 'sunday' then 7
+    end;
+
+--과제] 2005년 이전에 입사한 사원들에게 100만원 사품권,
+--      2005년 이후 입사 10만원 상품권 지급
+--      사원들의 이름,입사일,상품권금액을 조회하라
+
+select last_name, hire_date, 
+    case when hire_date < '2006/01/01' then '100만원'
+         else '10만원'
+    end "Gift Card"
+from employees
+order by hire_date;
