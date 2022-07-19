@@ -1,24 +1,9 @@
-select last_name, hire_date, to_char(hire_date, 'day') day,
-         decode (to_char(hire_date, 'fmday'), 
-                'monday',    1,
-                'tuesday',   2,
-                'wednesday', 3,
-                'thursday',  4,
-                'friday',    5,
-                'saturday',  6,
-                 'sunday', 7) num
-from employees
-order by 4;
+--과제]
+-- 가장 늦게 입사한 사람을 찾아라 / 이름, 입사일
+select e.last_name ,e.hire_date
+from employees e join employees m
+on e.hire_date >= m.hire_date;
 
-select last_name, hire_date, to_char(hire_date, 'day'),
-    case to_char(hire_date, 'day')
-        when 'monday' then 1
-        when 'tuesday' then 2
-        when 'wednesday' then 3
-        when 'thursday' then 4
-        when 'friday' then 5
-        when 'saturday' then 6
-        when 'sunday' then 7
-    end day
+select last_name, hire_date
 from employees
-order by day;
+order by hire_date desc;

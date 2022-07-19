@@ -59,13 +59,15 @@ from employees natural join departments;
   select l.city, d.department_name, d.location_id --error] using 칼럼에는 접두사를 못붙인다.
  from locations l join departments d 
  using (location_id)
- where d.location_id = 1400;--error] using 칼럼에는 접두사를 못붙인다.
+ where d.location_id = 1400;--error] using에 사용된 칼럼에는 접두사를 못붙인다.
  
  select e.last_name, d.department_name
  from employees e join departments d
  using (department_id)
  where d.manager_id = 100;
  --===============================================--
+ -- using -> on
+ 
  select e.employee_id, e.last_name, e.department_id,
     d.department_id, d.location_id
 from employees e join departments d
@@ -98,8 +100,7 @@ join locations l
 using (location_id)
 where city = 'Toronto';
 
---IT_PROG, 4200<= salary <= 9000
--- 출력값중4000 10000 있다.
+-- none equi join // =이 아니라 다른 값을 쓰면 none이다 
 select e.last_name, e.salary, e.job_id
 from employees e join jobs j
 on e.salary between j.min_salary and j.max_salary
@@ -124,11 +125,77 @@ order by 2,1,3;
 
 --과제] Davies 보다 후에 입사한 사원들의 이름,입사일을 조회하라.
 --      
-select e.last_name, c.last_name, c.hire_date
-from hire_date e join hire_date c
-on e.hire_date = c.hire_date
-where e.hire_date 'Davies' < c.hire_date;
+select c.last_name, c.hire_date
+from employees e join employees c
+on e.last_name = 'Davies'
+    and e.hire_date < c.hire_date
+order by hire_date;
 
-select last_name, hire_date
-from employees
-where last_name = 'Davies' > ;
+--과제] 매니저보다 먼저 입사한 사원들의 이름, 입사일, 매니저명 매니저 입사일을 조회하라.
+select e.last_name, e.hire_date, e.manager_id,
+        m.employee_id, m.last_name, m.hire_date
+from employees e join employees m
+on e.manager_id = m.employee_id
+    and e.hire_date < m.hire_date;
+  
+--=====================================--
+--outer join 밖에있는걸 조인하라
+
+select e.last_name, e.department_id, d.department_name
+from employees e join departments d
+on e.department_id = d.department_id;
+
+-- 사원중 department_id가 없는 인원을 추가 (조인되지 않은 값까지 추가
+select e.last_name, e.department_id, d.department_name
+from employees e left outer join departments d
+on e.department_id = d.department_id;
+
+-- departments중 사원이 없는 부서까지 추가
+select e.last_name, e.department_id, d.department_name
+from employees e right outer join departments d
+on e.department_id = d.department_id;
+
+-- 부서가 없는직원과, 직원이 없는 부서 까지 모두 추가
+select e.last_name, e.department_id, d.department_name
+from employees e full outer join departments d
+on e.department_id = d.department_id;
+
+--과제] 사원들의 이름,사번,매니저명,매니저의 사번을 조회하라
+--      king 사장도 테이블에 보함한다.
+select e.last_name, e.employee_id, m.last_name, m.employee_id
+from employees e left outer join employees m
+on e.manager_id = m.employee_id
+order by 2;
+--=================================================--
+
+select d.department_id, d.department_name, d.location_id, l.city
+from departments d, locations l
+where d.location_id = l.location_id
+and d.department_id in(20,50);
+
+select e.last_name,d.department_name, l.city
+from employees e, departments d, locations l
+where e.department_id = d.department_id
+    and d.location_id = l.location_id;
+  
+select e.last_name, e.salary, e.job_id
+from employees e, jobs j
+where e.salary between j.min_salary and j.max_salary
+    and j.job_id = 'IT_PROG';  
+
+select e.last_name, e.department_id, d.department_name
+from employees e, departments d
+where e.department_id(+) = d.department_id; -- (+)를 넣음으로 right outer join
+
+select e.last_name, e.department_id, d.department_name
+from employees e, departments d
+where e.department_id = d.department_id(+); -- left outer join
+
+select e.last_name, e.department_id, d.department_name
+from employees e, departments d
+where e.department_id(+) = d.department_id(+); -- ERROR] full outer join은 없다
+
+select w.last_name || ' works for ' || m.last_name
+from employees w, employees m -- self join 가능
+where w.manager_id = m.employee_id;
+  
