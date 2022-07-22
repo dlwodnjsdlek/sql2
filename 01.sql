@@ -6,7 +6,7 @@ from departments;
 select location_id, department_id --select원하는 데이터
 from departments;                 --from ~에서 가져와라
 
-desc departments -- 구조확인 desc
+desc departments; -- 구조확인 desc
 
 --과제] employees 구조를 확인하라.
 desc employees

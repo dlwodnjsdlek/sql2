@@ -34,7 +34,7 @@ from employees;
 
 select 
     nvl(commission_pct, 0)"nvl(조건문, 리턴값)", -- 조건 불충족시 리턴값 출력
-    nvl2(commission_pct, 'O', 'X')"nal2(조건,O,X)", -- 조건맞으면O출력 틀리면X출력 
+    nvl2(commission_pct, 'O', 'X')"nal2(조건,true,false)", -- 조건맞으면O출력 틀리면X출력 
     nullif(length(first_name),length(last_name)) "nullif", --nullif(1,2) 값이 같으면null / 틀리면 1출력
     coalesce(to_char(commission_pct), to_char(manager_id), 'None')"coalesce",
 --   ㄴ coalsece(칼럼1, 칼럼2,... 칼럼n)
@@ -53,3 +53,27 @@ select
     else salary end "case when then2"           -- else 리턴 end
 from employees;
 
+
+select last_name, hire_date, to_char(hire_date, 'fmday')day
+from employees
+order by case day
+        when 'monday' then 1
+        when 'tuesday' then 2
+        when 'wednesday' then 3
+        when 'thursday' then 4
+        when 'friday' then 5
+        when 'saturday' then 6
+        when 'sunday' then 7
+    end;
+
+select last_name, hire_date, to_char(hire_date, 'fmd')day
+from employees
+order by case day
+        when '2' then 1
+        when '3' then 2
+        when '4' then 3
+        when '5' then 4
+        when '6' then 5
+        when '7' then 6
+        when '1' then 7
+    end;

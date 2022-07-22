@@ -105,7 +105,6 @@ select e.last_name, e.salary, e.job_id
 from employees e join jobs j
 on e.salary between j.min_salary and j.max_salary
     and j.job_id = 'IT_PROG';
---이거 물어보기
 --=============================================--    
 -- self join
 select worker.last_name emp, manager.last_name mgr

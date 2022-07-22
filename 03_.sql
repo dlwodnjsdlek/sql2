@@ -14,14 +14,14 @@ select last_name
 from employees
 where lower(last_name) = 'higgins'; --lower로 값을 higgins로 바꿈
 
-select concat('안녕?', ' 친구')" ", -- 붙이기
-    substr('안녕하세요. 이재원입니다.', 4,5)" ", -- 4번째부터 5개
-    substr('안녕하세요?', -3,3) " ",-- -3부터 뒤로 3개
-    length('안녕하세요.')" ", -- 글자 개수
-    instr('안녕하세요.', '하')" ", --글자 위치찾기
-    instr('안녕하세요.', '없')" ",--글자 위치찾기 없는글자는 위치가 0으로 표현  
-    replace('Jack and Jue', 'J', 'Bl')" ",
-    '|' || trim(' ' from ' Hello ') || '|' " "--trim양끝만 확인 삭제.
+select concat('안녕?', ' 친구')"붙이기", -- 붙이기
+    substr('안녕하세요. 이재원입니다.', 4,5)"x번째부터 y개", -- 4번째부터 5개
+    substr('안녕하세요?', -3,3) "-x부터 뒤로 y개",-- -3부터 뒤로 3개
+    length('안녕하세요.')"글자수", -- 글자 개수
+    instr('안녕하세요.', '하')"글자 위치 찾기", --글자 위치찾기
+    instr('안녕하세요.', '없')"없는 글자 위치",--글자 위치찾기 없는글자는 위치가 0으로 표현  
+    replace('Jack and Jue', 'J', 'Bl')"replace",
+    '|' || trim(' ' from ' Hello ') || '|' "trim"--trim양끝만 확인 삭제.
 from dual;
 
 select lpad(salary, 5, '*'), --왼쪽에 붙이고(이것들을, 5글자로, 빈자리는 *로)
